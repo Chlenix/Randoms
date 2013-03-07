@@ -10,7 +10,7 @@ import bot.script.wrappers.Widget;
 
 public class widgetclick extends RandomSolver {
 	
-	public static final int[] NPC_ACTIVATE = {4375, 2540, 410, 409, 956, 2539, 2538};
+	public static final int[] NPC_ACTIVATE = {4375, 2540, 410, 409, 956, 2539, 2538, 570};
 	
     @Override
     public boolean onStart() {
@@ -19,10 +19,9 @@ public class widgetclick extends RandomSolver {
 
     @Override
     public int loop() {
-    	if(!isValid()) {
-        return -1;
+    	if (!isValid()) {
+    		return -1;
     	}
-    	
     	NPC genNPC = Npcs.getNearest(NPC_ACTIVATE);
     	Widget b = Widgets.get(241);
     	Widget c = Widgets.get(242);
@@ -58,7 +57,11 @@ public class widgetclick extends RandomSolver {
 
 	@Override 
 	public boolean isValid() {  
+	try {
 	NPC n = Npcs.getNearest(NPC_ACTIVATE);
 	return n != null && n.getInteractingEntity() == Players.getLocal(); 
+	} catch (Exception n) {
+            return true;
+	}
 	}
 }

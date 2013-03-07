@@ -1,0 +1,63 @@
+import bot.script.RandomSolver;
+import bot.script.methods.Mouse;
+import bot.script.methods.Npcs;
+import bot.script.methods.Widgets;
+import bot.script.util.Random;
+import bot.script.wrappers.NPC;
+import bot.script.wrappers.Widget;
+
+
+public class widgetclick extends RandomSolver {
+  
+	public static final int[] NPC_ACTIVATE = {4375, 2540, 410, 409, 956, 2539, 2538};
+	
+    @Override
+    public boolean onStart() {
+        return true;
+    }
+
+    @Override
+    public int loop() {
+    	if(!isValid()) {
+        return -1;
+    	}
+    	
+    	NPC genNPC = Npcs.getNearest(NPC_ACTIVATE);
+    	Widget b = Widgets.get(241);
+    	Widget c = Widgets.get(242);
+    	Widget d = Widgets.get(243);
+    	Widget e = Widgets.get(244);
+    	
+    	if(genNPC != null && Widgets.get(241).isValid(b) == false || Widgets.get(242).isValid(c) == false || Widgets.get(243).isValid(d) == false || Widgets.get(244).isValid(e) == false) {
+
+    		genNPC.interact("Talk-to");
+    		sleep(1000,2500);
+    		
+    		if(b != null && Widgets.get(241).isValid(b) || Widgets.get(242).isValid(c) || Widgets.get(243).isValid(d) || Widgets.get(244).isValid(e)) {
+        		Mouse.move(Random.nextInt(196, 404), Random.nextInt(445, 455));
+        		sleep(1000,1200);
+        		Mouse.click(true);
+    		}
+    		
+    	}
+		return Random.nextInt(50, 100);
+    }
+
+	@Override
+	public String getAuthor() {
+		// TODO Auto-generated method stub
+		return "Tombraider";
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "WidgetSolver";
+	}
+
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return Npcs.getNearest(NPC_ACTIVATE) != null;
+	}
+}

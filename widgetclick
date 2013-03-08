@@ -1,7 +1,6 @@
 import bot.script.RandomSolver;
 import bot.script.methods.Mouse;
 import bot.script.methods.Npcs;
-import bot.script.methods.Players;
 import bot.script.methods.Widgets;
 import bot.script.util.Random;
 import bot.script.wrappers.NPC;
@@ -10,7 +9,7 @@ import bot.script.wrappers.Widget;
 
 public class widgetclick extends RandomSolver {
 	
-	public static final int[] NPC_ACTIVATE = {4375, 2540, 410, 409, 956, 2539, 2538, 570};
+	public static final int[] NPC_ACTIVATE = {4375, 2540, 410, 409, 956, 2539, 2538};
 	
     @Override
     public boolean onStart() {
@@ -22,12 +21,12 @@ public class widgetclick extends RandomSolver {
     	if (!isValid()) {
     		return -1;
     	}
+    	
     	NPC genNPC = Npcs.getNearest(NPC_ACTIVATE);
     	Widget b = Widgets.get(241);
     	Widget c = Widgets.get(242);
     	Widget d = Widgets.get(243);
     	Widget e = Widgets.get(244);
-    	
     	if(genNPC != null && Widgets.get(241).isValid(b) == false || Widgets.get(242).isValid(c) == false || Widgets.get(243).isValid(d) == false || Widgets.get(244).isValid(e) == false) {
 
     		genNPC.interact("Talk-to");
@@ -57,11 +56,8 @@ public class widgetclick extends RandomSolver {
 
 	@Override 
 	public boolean isValid() {  
-	try {
 	NPC n = Npcs.getNearest(NPC_ACTIVATE);
-	return n != null && n.getInteractingEntity() == Players.getLocal(); 
-	} catch (Exception n) {
-            return true;
+	return n != null;
 	}
-	}
+
 }

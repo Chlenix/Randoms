@@ -9,7 +9,7 @@ import bot.script.wrappers.Widget;
 
 public class widgetclick extends RandomSolver {
 	
-	public static final int[] NPC_ACTIVATE = {4375, 2540, 410, 409, 956, 2539, 2538};
+	public static final int[] NPC_ACTIVATE = {4375, 2540, 410, 409, 956, 2539, 2538, 570};
 	
     @Override
     public boolean onStart() {
@@ -57,7 +57,7 @@ public class widgetclick extends RandomSolver {
 	@Override 
 	public boolean isValid() {  
 	NPC n = Npcs.getNearest(NPC_ACTIVATE);
-	return n != null;
+	return n != null && n.getInteractingIndex() != -1;
 	}
 
 }

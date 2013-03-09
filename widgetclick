@@ -1,63 +1,190 @@
-import bot.script.RandomSolver;
-import bot.script.methods.Mouse;
-import bot.script.methods.Npcs;
-import bot.script.methods.Widgets;
-import bot.script.util.Random;
-import bot.script.wrappers.NPC;
-import bot.script.wrappers.Widget;
-
-
-public class widgetclick extends RandomSolver {
 	
-	public static final int[] NPC_ACTIVATE = {4375, 2540, 410, 409, 956, 2539, 2538, 570};
-	
-    @Override
-    public boolean onStart() {
-        return true;
-    }
+	public static final int[] NPC_ACTIVATE = {4375, 2540, 410, 409, 956, 2539, 2538, 407, 411, 2470};
+    	int[] spirit2 = { 438, 439, 440, 441, 442, 443 };
+    	int[] chicken2 = { 2463, 2464, 2465, 2466, 2467, 2468 };
 
-    @Override
-    public int loop() {
-    	if (!isValid()) {
-    		return -1;
-    	}
-    	
-    	NPC genNPC = Npcs.getNearest(NPC_ACTIVATE);
+	@Override
+	public boolean onStart() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	@Override
+	public int loop() {
+		if(validCheck()) {
+		talkRandoms();
+		} else {
+		// Your code here..
+		}
+		return 1;
+	}
+	
+	public void talkRandoms() {
+        NPC Chicken = Npcs.getNearest(chicken2);
+        NPC pirate = Npcs.getNearest(2539);
+        NPC plant = Npcs.getNearest(407);
+        NPC genie = Npcs.getNearest(409);
+        NPC OldMan = Npcs.getNearest(410);
+        NPC Guard = Npcs.getNearest(4375);
+        NPC Hyde = Npcs.getNearest(2540);
+        NPC Swarm = Npcs.getNearest(411);
+        NPC drunkenDwarf = Npcs.getNearest(956);
+        NPC Rick = Npcs.getNearest(2538);
+        NPC frog = Npcs.getNearest(2470);
+        GameObject frogobj = Objects.getNearest(5955);
+        Tile frogtile = new Tile(2464, 4776);
     	Widget b = Widgets.get(241);
     	Widget c = Widgets.get(242);
     	Widget d = Widgets.get(243);
     	Widget e = Widgets.get(244);
-    	if(genNPC != null && Widgets.get(241).isValid(b) == false || Widgets.get(242).isValid(c) == false || Widgets.get(243).isValid(d) == false || Widgets.get(244).isValid(e) == false) {
-
-    		genNPC.interact("Talk-to");
-    		sleep(1000,2500);
-    		
-    		if(b != null && Widgets.get(241).isValid(b) || Widgets.get(242).isValid(c) || Widgets.get(243).isValid(d) || Widgets.get(244).isValid(e)) {
-        		Mouse.move(Random.nextInt(196, 404), Random.nextInt(445, 455));
-        		sleep(1000,1200);
-        		Mouse.click(true);
-    		}
+    	
+    	if(Chicken != null) {
     		
     	}
-		return Random.nextInt(50, 100);
-    }
+    	if(plant != null) {
+            if (Calculations.distanceBetween(plant.getLocation(), Players.getLocal()
+            		.getLocation()) <= 2) {
+	           Camera.turnToTile(plant.getLocation());
+	           plant.interact("Pick");
+	           sleep(2000,4000);
+	           Mouse.click(300,455);
+	           sleep(2000,4000);
+	       log("Strange plant :o");
+    		
+    	}
+    	}
+    	if(Swarm != null) {
 
-	@Override
-	public String getAuthor() {
-		// TODO Auto-generated method stub
-		return "Tombraider";
+    	}
+    	if(frogobj != null) {
+            log("starting frog");
+            if(frog != null){
+            Walking.walkTo(frog.getLocation());
+            sleep(4000);
+            Camera.turnToTile(frog.getLocation());
+            sleep(300);
+            frog.interact("Talk-to Frog");
+            sleep(2000,4000);
+            Mouse.click(300,455);
+            sleep(2000,4000);
+            Mouse.click(300,455);
+            sleep(2000,4000);
+            Mouse.click(300,455);
+            sleep(2000,4000);
+            Mouse.click(300,455);
+            sleep(8000,10000);                
+            log("Frawgie random :D");
+            } else {
+            Walking.walkTo(frogtile);
+    	}
+    	if(pirate != null) {
+        	if(Calculations.distanceBetween(pirate.getLocation(), Players.getLocal()
+            	    .getLocation()) <= 2) {
+        		Camera.turnToTile(pirate.getLocation());
+        		pirate.interact("Talk-to Cap'n Hand");
+        		sleep(1000,2500);
+        		if(b != null && Widgets.get(241).isValid(b) || Widgets.get(242).isValid(c) || Widgets.get(243).isValid(d) || Widgets.get(244).isValid(e)) {
+            		Mouse.move(Random.nextInt(196, 404), Random.nextInt(445, 455));
+            		sleep(1000,1200);
+            		Mouse.click(true);
+        		}
+        	}
+        	log("Pirate Random");
+    	}
+    	if(genie != null) {
+        	if(Calculations.distanceBetween(genie.getLocation(), Players.getLocal()
+            	    .getLocation()) <= 2) {
+        		Camera.turnToTile(genie.getLocation());
+        		genie.interact("Talk-to Genie");
+        		sleep(1000,2500);
+        		if(b != null && Widgets.get(241).isValid(b) || Widgets.get(242).isValid(c) || Widgets.get(243).isValid(d) || Widgets.get(244).isValid(e)) {
+            		Mouse.move(Random.nextInt(196, 404), Random.nextInt(445, 455));
+            		sleep(1000,1200);
+            		Mouse.click(true);
+        		}
+        	}
+        	log("Genie Random");
+    	}
+    	if(OldMan != null) {
+        	if(Calculations.distanceBetween(OldMan.getLocation(), Players.getLocal()
+            	    .getLocation()) <= 2) {
+        		Camera.turnToTile(OldMan.getLocation());
+        		OldMan.interact("Talk-to Mysterious Old Man");
+        		sleep(1000,2500);
+        		if(b != null && Widgets.get(241).isValid(b) || Widgets.get(242).isValid(c) || Widgets.get(243).isValid(d) || Widgets.get(244).isValid(e)) {
+            		Mouse.move(Random.nextInt(196, 404), Random.nextInt(445, 455));
+            		sleep(1000,1200);
+            		Mouse.click(true);
+        		}
+        	}
+        	log("Mysterious old man random");
+    	}
+    	if(Guard != null) {
+        	if(Calculations.distanceBetween(Guard.getLocation(), Players.getLocal()
+            	    .getLocation()) <= 2) {
+        		Camera.turnToTile(Guard.getLocation());
+        		Guard.interact("Talk-to Guard");
+        		sleep(1000,2500);
+        		if(b != null && Widgets.get(241).isValid(b) || Widgets.get(242).isValid(c) || Widgets.get(243).isValid(d) || Widgets.get(244).isValid(e)) {
+            		Mouse.move(Random.nextInt(196, 404), Random.nextInt(445, 455));
+            		sleep(1000,1200);
+            		Mouse.click(true);
+        		}
+        	}
+        	log("Guard Random");
+    	}
+    	if(Hyde != null) {
+        	if(Calculations.distanceBetween(Hyde.getLocation(), Players.getLocal()
+            	    .getLocation()) <= 2) {
+        		Camera.turnToTile(Hyde.getLocation());
+        		Hyde.interact("Talk-to Dr Jekyll");
+        		sleep(1000,2500);
+        		if(b != null && Widgets.get(241).isValid(b) || Widgets.get(242).isValid(c) || Widgets.get(243).isValid(d) || Widgets.get(244).isValid(e)) {
+            		Mouse.move(Random.nextInt(196, 404), Random.nextInt(445, 455));
+            		sleep(2000,4000);
+            		Mouse.click(true);
+        	        sleep(2000,4000);
+            		Mouse.click(true);
+        	        sleep(2000,4000);
+            		Mouse.click(true);
+        	        sleep(2000,4000);
+            		Mouse.click(true);
+        	        sleep(2000,4000);
+        		}
+        	}
+        	log("Dr Jekyll hyde random");
+    	}
+    	if(drunkenDwarf != null) {
+        	if(Calculations.distanceBetween(drunkenDwarf.getLocation(), Players.getLocal()
+            	    .getLocation()) <= 2) {
+        		Camera.turnToTile(drunkenDwarf.getLocation());
+        		drunkenDwarf.interact("Talk-to Drunken Dwarf");
+        		sleep(1000,2500);
+        		if(b != null && Widgets.get(241).isValid(b) || Widgets.get(242).isValid(c) || Widgets.get(243).isValid(d) || Widgets.get(244).isValid(e)) {
+            		Mouse.move(Random.nextInt(196, 404), Random.nextInt(445, 455));
+            		sleep(1000,1200);
+            		Mouse.click(true);
+        		}
+        	}
+        	log("Drunken Dwarf Random");
+    	}
+    	if(Rick != null) {
+        	if(Calculations.distanceBetween(Rick.getLocation(), Players.getLocal()
+            	    .getLocation()) <= 2) {
+        		Camera.turnToTile(Rick.getLocation());
+        		Rick.interact("Talk-to Rick Turpentine");
+        		sleep(1000,2500);
+        		if(b != null && Widgets.get(241).isValid(b) || Widgets.get(242).isValid(c) || Widgets.get(243).isValid(d) || Widgets.get(244).isValid(e)) {
+            		Mouse.move(Random.nextInt(196, 404), Random.nextInt(445, 455));
+            		sleep(1000,1200);
+            		Mouse.click(true);
+        		}
+        	}
+        	log("Rick Turpentine Random");
+    	}
+    	}
+	
+	public boolean validCheck() {
+		NPC n = Npcs.getNearest(NPC_ACTIVATE);
+		return n != null;
 	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "WidgetSolver";
-	}
-
-	@Override 
-	public boolean isValid() {  
-	NPC n = Npcs.getNearest(NPC_ACTIVATE);
-	return n != null && n.getInteractingIndex() != -1;
-	}
-
-}

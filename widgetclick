@@ -29,7 +29,7 @@
         NPC Hyde = Npcs.getNearest(2540);
         NPC Swarm = Npcs.getNearest(411);
         NPC drunkenDwarf = Npcs.getNearest(956);
-        NPC Rick = Npcs.getNearest(2538);
+        NPC Rick = Npcs.getNearest(2476);
         NPC frog = Npcs.getNearest(2470);
         GameObject frogobj = Objects.getNearest(5955);
         Tile frogtile = new Tile(2464, 4776);

@@ -1,0 +1,103 @@
+import bot.script.methods.GroundItems;
+import bot.script.methods.Inventory;
+import bot.script.methods.Methods;
+import bot.script.methods.Npcs;
+import bot.script.methods.Objects;
+import bot.script.methods.Players;
+import bot.script.methods.Walking;
+import bot.script.methods.Widgets;
+import bot.script.util.Random;
+import bot.script.wrappers.GameObject;
+import bot.script.wrappers.Tile;
+
+public class EvilBob {
+  
+	/**
+	 * @author GotBored
+	 */
+	
+	private static int stage = 0;
+	private static Tile tile;
+	private static GameObject spot;
+	private static long time = 0;
+
+	/**
+	 * Solves the evil bob random
+	 */
+	
+	public static void evilBob() {
+		System.out.println("Evil Bob random initiated");
+		time = System.currentTimeMillis();
+		if (stage == 0) {
+			if (Widgets.getComponent(64, 3) != null)
+				Widgets.getComponent(64, 3).interact("Continue");
+			else if (Widgets.getComponent(241, 3) != null)
+				Widgets.getComponent(241, 3).interact("Continue");
+			else 
+				stage = 1;
+		} else if (stage == 1) {
+			Npcs.getNearest(2481).interact("Talk-to");
+			if (Widgets.getComponent(64, 3) != null)
+				Widgets.getComponent(64, 3).interact("Continue");
+			else if (Widgets.getComponent(241, 3) != null)
+				Widgets.getComponent(241, 3).interact("Continue");
+			else {
+				while (tile == null) {
+					tile = Location();
+				}
+				stage = 2;
+				while (!Npcs.getNearest(2481).isVisible()) {
+					Methods.sleep(106, 204);
+				}
+			}
+		} else if (stage == 2) {
+			Walking.walkTo(tile);
+			spot = Objects.getNearest(8986);
+			GroundItems.getNearest(6210).interact("Take");
+			if (spot != null && spot.isVisible()) {
+				spot.interact("Net");
+			} else if (spot != null) {
+				Walking.walkTo(spot.getLocation());
+			}
+			while (Players.getLocal().getAnimation() == 520) {
+				Methods.sleep(356, 421);
+			}
+			if (Inventory.contains(6203))
+				stage = 3;
+		} else if (stage == 3) {
+			if (Objects.getNearest(8985) != null) {
+				if (Objects.getNearest(8985).isVisible()) {
+					Inventory.getItem(6203).interact("Use");
+					Objects.getNearest(8985).interact("Use");
+					while (Players.getLocal().getAnimation() == 897) {
+						Methods.sleep(204, 308);
+					}
+					stage = 4;
+				} else 
+					Walking.walkTo(Objects.getNearest(8985).getLocation());
+			}
+		} else if (stage == 4) {
+			Inventory.getItem(6201).interact("Use");
+			Npcs.getNearest(2479).interact("Use");
+			if (Widgets.getComponent(241, 3) != null) {
+				Widgets.getComponent(241, 3).interact("Continue");
+			}
+			if (!Inventory.contains(6201)) {
+				Objects.getNearest(8987).interact("Use");
+			}
+			System.out.println("Evil Bob random completed in: "+ (System.currentTimeMillis() - time) +"milliseconds.");
+		}
+	}
+	
+	public static Tile Location() {
+		if (Objects.getNearest(8991) != null && Objects.getNearest(8991).isVisible())
+			return new Tile(Random.nextInt(2540, 2541), Random.nextInt(4776, 4780));
+		else if (Objects.getNearest(8992) != null && Objects.getNearest(8992).isVisible())
+			return new Tile(Random.nextInt(2526, 2530), Random.nextInt(4788, 4790));
+		else if (Objects.getNearest(8993) != null && Objects.getNearest(8993).isVisible())
+			return new Tile(Random.nextInt(2512, 2513), Random.nextInt(4774, 4778));
+		else if (Objects.getNearest(8990) != null && Objects.getNearest(8990).isVisible())
+			return new Tile(Random.nextInt(2524, 2529), Random.nextInt(4765, 4766));
+		return null;
+	}
+}

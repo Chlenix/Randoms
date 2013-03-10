@@ -1,0 +1,39 @@
+        int[] poles = { 15000, 15002, 15004, 15006, 15008 };
+        int[] wrongpoles = { 15001, 15003, 15005, 15007, 15009 };
+        GameObject pole = Objects.getNearest(poles);
+        GameObject wrongpole = Objects.getNearest(wrongpoles);
+        GameObject poledoor = Objects.getNearest(15010);
+        int polepoint = 0;
+
+        while(wrongpole != null){
+            if (pole != null && polepoint != 0){
+                sleep(200);
+                pole.interact("Tag");
+                sleep(7000,9000);
+                polepoint++;
+                pole = Objects.getNearest(poles);
+            }
+            if (pole == null){
+                sleep(2000);
+                if (pole == null){
+                    Camera.turnToTile(poledoor.getLocation());
+                    sleep(500);
+                    poledoor.interact("Exit");
+                    sleep(15000);
+                    polepoint = 0;
+                    randoms++;
+                    wrongpole = Objects.getNearest(wrongpoles);
+                    pole = Objects.getNearest(poles);
+                    performWalktoTree();
+                    log("HOLY SHIT THE PINBALL RANDOM WORKED");
+                }
+            }
+            
+            if(poledoor != null && polepoint == 0){
+                Mouse.click(674,483);
+                sleep(300);
+                Mouse.click(640,430);
+                sleep(300);
+                polepoint++;
+            }
+        }///end of pinball

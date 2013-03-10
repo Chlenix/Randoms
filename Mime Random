@@ -1,0 +1,87 @@
+import bot.script.BotScript;
+import bot.script.methods.Mouse;
+import bot.script.methods.Npcs;
+import bot.script.methods.Widgets;
+import bot.script.wrappers.Widget;
+
+public class mimeRandom extends BotScript {
+   public int mime = 1056;
+   public int mimeEmote = -1;
+   boolean yourTurn = false;
+   int turns = 0;
+
+   
+   public boolean valid(Widget w) {
+      for (Widget i : Widgets.getLoaded()) {
+         if (w.getIndex() == i.getIndex())
+            return true;
+      }
+      return false;
+   }
+   
+   
+      @Override
+      public int loop() {
+         while(mimeEmote == -1 && yourTurn == false && turns < 5) {
+         mimeEmote =  Npcs.getNearest(mime).getAnimation();
+         sleep(1000);
+         if(mimeEmote != -1 && valid(Widgets.get(188)) == true) {
+         yourTurn = true;
+         }
+         }
+         if (yourTurn == true) {
+            /*cry - 860 - index 2
+            think - 857 index 3
+            laugh - 861 index 4
+            dance - 866 index 5
+            climb rope - 1130 index 6
+            lean on air - 1129 index 7
+            glass wall - 1128 index 8
+            glass box - 1131 index 9*/
+            int child = 0;
+            switch(mimeEmote) {
+                  case 860: //cry
+                     child = 2;
+                     break;
+                  case 857: //think
+                     child = 3;
+                     break;
+                  case 861: //laugh
+                     child = 4;
+                     break;
+                  case 866: //dance
+                     child = 5;
+                     break;
+                  case 1130://climb rope
+                     child = 6;
+                     break;
+                  case 1129://lean on air
+                     child = 7;
+                     break;
+                  case 1128://glass wall
+                     child = 8;
+                     break;
+                  case 1131://glass box
+                     child = 9;
+                     break;
+                     
+            }
+                int x = Widgets.get(188).getChild(child).getX();
+                int y = Widgets.get(188).getChild(child).getY();
+                Mouse.move(x + 50, y + 35);
+                sleep(50, 150);
+                Mouse.click(true);
+                mimeEmote = -1;
+                yourTurn = false;
+                turns++;
+                sleep(1000);
+         }
+         return 1; 
+      }
+
+   @Override
+   public boolean onStart() {
+
+      return true;
+   }
+}

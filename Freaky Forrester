@@ -1,0 +1,120 @@
+
+    public boolean valid(Widget w) {
+        for (Widget i : Widgets.getLoaded()) {
+            if (w.getIndex() == i.getIndex())
+                return true;
+        }
+        return false;
+    }
+
+    public int freakyForester = 2458;
+    public int interactFF = 32769;
+    public boolean completed = false;
+    public int chickentokill = 0;
+    public boolean gotMeat = false;
+    int meats = 6179;
+
+
+        NPC lumberjack = Npcs.getNearest(freakyForester);
+        GroundItem pheasantMeat = GroundItems.getNearest(6179);
+        GameObject forestportal = Objects.getNearest(8972);
+
+        while(lumberjack != null){
+            if(chickentokill == 0){
+                log("Starting forrester random");
+                Camera.turnToTile(lumberjack.getLocation());
+                sleep(500);
+                Npcs.getNearest(freakyForester).interact("Talk-To");
+                sleep(150,250);
+                String chickentokilltext = "test";
+                if(Widgets.getComponent(242,2) != null){
+                    chickentokilltext = Widgets.getComponent(242,2).getText();
+                    log("this one is open");
+                } else
+                if(Widgets.getComponent(243,2) != null){
+                    chickentokilltext = Widgets.getComponent(243,2).getText();
+                    log("243 is open");
+                }
+                String one = "one";
+                String two = "two";
+                String three = "three";
+                String four = "four";
+                log("test");
+                if (chickentokilltext.indexOf(one) != -1) {
+                    chickentokill = 2459;
+                    log("1");
+                    sleep(150,250);
+                } else if (chickentokilltext.indexOf(two) != -1) {
+                    chickentokill = 2460;
+                    log("2");
+                    sleep(150,250);
+                } else if (chickentokilltext.indexOf(three) != -1) {
+                    chickentokill = 2461;
+                    log("3");
+                    sleep(150,250);
+                } else if (chickentokilltext.indexOf(four) != -1) {
+                    chickentokill = 2462;
+                    log("4");
+                    sleep(150,250);
+                } else {
+                    log("idk");
+                }
+                sleep(1000);
+                pheasantMeat = GroundItems.getNearest(meats);
+            } else
+            if(!Inventory.contains(meats) && gotMeat == false) {
+                if(pheasantMeat == null) {
+                    Npcs.getNearest(chickentokill).interact("Attack");
+                    sleep(3000,5000);
+                    pheasantMeat = GroundItems.getNearest(meats);
+                } else if(pheasantMeat != null && !Inventory.isFull()) {
+                    pheasantMeat = GroundItems.getNearest(meats);
+                    pheasantMeat.interact("Take");
+                    gotMeat = true;
+                    sleep(3000,6000);
+                } else if (pheasantMeat != null && Inventory.isFull()) {
+                    if(Inventory.contains(59)) {
+                        Inventory.getItem(59).interact("drop");
+                        sleep(3000,6000);
+                        pheasantMeat.interact("Take");
+                        gotMeat = true;
+                        sleep(3000,6000);
+                    } else if(Inventory.contains(1516) && !Inventory.contains(59)) {
+                        Inventory.getItem(1516).interact("drop");
+                        sleep(3000,6000);
+                        pheasantMeat.interact("Take");
+                        gotMeat = true;
+                        sleep(300,600);
+                    } else {
+                        log("Inventory full cannot complete random");
+                        return -1;
+                    }
+                }
+            }
+            
+            if(gotMeat == true) {
+                Camera.turnToTile(lumberjack.getLocation());
+                sleep(500);
+                Npcs.getNearest(freakyForester).interact("Talk-to");
+                sleep(4000);
+                completed = true;
+            }
+            if(completed == true) {
+                Walking.walkTo(forestportal.getLocation());
+                sleep(10000);
+                Camera.turnToTile(forestportal.getLocation());
+                sleep(500);
+                Objects.getNearest(8972).click();
+                sleep(10000);
+                if(valid(Widgets.get(566))) {
+                    Widgets.getComponent(566, 18).click();
+                }
+                sleep(5000);
+                lumberjack = Npcs.getNearest(freakyForester);
+                randoms++;
+                performWalktoTree();
+            }
+            log("hmmmm");
+            sleep(2000);
+            return 1;
+        }

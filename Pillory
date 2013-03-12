@@ -1,0 +1,115 @@
+import nl.wbot.client.Widget;
+import bot.script.methods.Calculations;
+import bot.script.methods.Camera;
+import bot.script.methods.GroundItems;
+import bot.script.methods.Inventory;
+import bot.script.methods.Methods;
+import bot.script.methods.Mouse;
+import bot.script.methods.Npcs;
+import bot.script.methods.Objects;
+import bot.script.methods.Players;
+import bot.script.methods.Walking;
+import bot.script.methods.Widgets;
+import bot.script.util.Random;
+import bot.script.wrappers.Component;
+import bot.script.wrappers.GameObject;
+import bot.script.wrappers.Item;
+import bot.script.wrappers.NPC;
+ 
+import api.Node;
+import api.SkillData.Rate;
+import api.ScriptBase;
+import api.SkillData;
+import api.Skills;
+import api.Time;
+import api.Timer;
+import api.Utilities;
+
+public class PrisonPete extends Node{
+
+  /*
+	 * Author: Potofreak
+	 */	
+	
+	public static int LOCK_ID = 6836;
+	public static int PRISONPETE_WIDGET = 189;
+	public final static int LARGELOCK_COMPONENT = 2;
+	public final static int LARGELOCK_DIAMOND = 9753;
+	public final static int LARGELOCK_SQUARE = 9754;
+	public final static int LARGELOCK_CIRCLE = 9755;
+	public final static int LARGELOCK_TRIANGLE = 9756;
+	public static int[] KEY_COMPONENTS = {3,4,5};
+	public static int KEY_DIAMOND = 9749;
+	public static int KEY_SQUARE = 9750;
+	public static int KEY_CIRCLE = 9751;
+	public static int KEY_TRIANGLE = 9752;	
+	
+	/*
+	 * NOTE:
+	 * KEY_COMPONENT 3 = Left key head
+	 * KEY_COMPONENT 3 + 3 = Left Key
+	 * KEY_COMPONENT 4 = Middle key head
+	 * KEY_COMPONENT 4 + 3 = Middle key
+	 * KEY_COMPONENT 5 = Right key head
+	 * KEY_COMPONENT 5 + 3 = Right key
+	 */
+	
+	GameObject lock;
+	Component largeLock;
+	
+	@Override
+	public boolean activate() {
+		return Widgets.getComponent(PRISONPETE_WIDGET, LARGELOCK_COMPONENT) != null || Objects.getNearest(LOCK_ID) != null;
+	}
+
+	@Override
+	public void execute() {
+		Methods.log("Inside Prison Pete");
+		lock = Objects.getNearest(LOCK_ID);
+		if(lock != null){
+			Camera.turnToTile(lock.getLocation());
+			lock.interact("Unlock");
+			Methods.sleep(Random.nextInt(300, 600));
+		}
+		if(Widgets.getComponent(PRISONPETE_WIDGET, LARGELOCK_COMPONENT) != null){
+			switch(Widgets.getComponent(PRISONPETE_WIDGET, LARGELOCK_COMPONENT).getModelId()){
+			case(LARGELOCK_DIAMOND):
+				for(int component : KEY_COMPONENTS){
+					if(Widgets.getComponent(PRISONPETE_WIDGET, component).getModelId() == KEY_DIAMOND){
+						Widgets.getComponent(PRISONPETE_WIDGET, (component+3)).click();
+						Methods.sleep(Random.nextInt(300, 700));
+					}
+				}
+				break;
+			case(LARGELOCK_SQUARE):
+				for(int component : KEY_COMPONENTS){
+					if(Widgets.getComponent(PRISONPETE_WIDGET, component).getModelId() == KEY_SQUARE){
+						Widgets.getComponent(PRISONPETE_WIDGET, (component+3)).click();
+						Methods.sleep(Random.nextInt(300, 700));
+					}
+				}
+				break;
+			case(LARGELOCK_CIRCLE):
+				for(int component : KEY_COMPONENTS){
+					if(Widgets.getComponent(PRISONPETE_WIDGET, component).getModelId() == KEY_CIRCLE){
+						Widgets.getComponent(PRISONPETE_WIDGET, (component+3)).click();
+						Methods.sleep(Random.nextInt(300, 700));
+					}
+				}
+				break;
+			case(LARGELOCK_TRIANGLE):
+				for(int component : KEY_COMPONENTS){
+					if(Widgets.getComponent(PRISONPETE_WIDGET, component).getModelId() == KEY_TRIANGLE){
+						Widgets.getComponent(PRISONPETE_WIDGET, (component+3)).click();
+						Methods.sleep(Random.nextInt(300, 700));
+					}
+				}
+				break;
+			default:
+				break;			
+			}
+		}
+		
+	}
+	
+}
